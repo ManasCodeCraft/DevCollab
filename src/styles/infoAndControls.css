@@ -1,0 +1,27 @@
+.info-window{
+   color: var(--text-stats);
+   font-size: large;
+   font-family:Arial, Helvetica, sans-serif;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+
+.info-window-wrapper{
+    padding: 1em !important;
+    background-color: var(--bg-stats);
+    box-shadow: var(--shadow-stats);
+    width: fit-content;
+    border-radius: 20px;
+    margin: 1em;
+}
+
+.controls-window{
+    margin: 1em;
+    padding: 1em !important;
+}
+
+.controls-window button{
+    margin: 10px 0 0 1em;
+}
+

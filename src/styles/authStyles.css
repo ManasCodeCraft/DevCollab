@@ -1,0 +1,14 @@
+.form-container-wrapper{
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100vh !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body{
+    overflow-x: hidden;
+}

@@ -1,0 +1,62 @@
+.project-nav a{
+    text-decoration: none !important;
+    transition: all 0.2s;
+    position: relative;
+    display: inline-block;
+    color: var(--text-color)
+}
+
+.project-nav a.active{
+    color: var(--heading-nav) !important;
+}
+
+.project-nav a.active::after{
+    width:100%;
+}
+
+.project-nav a::after{
+    content: "";
+    width: 0;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--heading-nav);
+    position: absolute;
+    transition: all 0.2s;
+}
+
+.project-nav a:hover::after{
+    width: 100%;
+}
+
+.project-nav{
+    display: flex !important;
+    justify-content: space-around !important;
+}
+
+.dir-structure .card{
+    background: var(--bg-project) !important;
+    border: var(--border-project);
+    transition: all 0.25s ease-in-out;
+ }
+ 
+ .dir-structure .card-title{
+     color: var(--title-project) !important;
+ }
+ 
+ .dir-structure .card:hover{
+     box-shadow: var(--shadow-project);
+ }
+
+ .dropdown-menu a{
+    background: inherit !important;
+ }
+
+ .dropdown-menu a:hover{
+    background: rgb(25, 86, 255) !important;
+    color: white !important;
+ }
+
+ .project-structure-container{
+    min-height: 95vh !important;
+ }

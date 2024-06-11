@@ -1,0 +1,47 @@
+.navbar {
+  background-color: var(--bg-nav) !important; /* Dark background color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+  z-index: 2;
+}
+
+.nav-brand-name {
+  letter-spacing: 2px;
+  color: #ffbd06;
+  transition: all 0.2s;
+}
+
+.nav-brand-name:hover{
+    color: #ffbd06;
+}
+
+.nav-brand-name:focus{
+    color : #ffbd06 !important;
+}
+
+.nav-brand-name:active{
+    transform : scale(0.95)
+}
+
+.nav-brand-name img {
+  margin-right: 10px; /* Adjust the spacing between the logo and text */
+  filter: brightness(0) invert(1); /* Invert logo color */
+}
+
+.navbar span {
+  margin-right: 10px;
+  float: right;
+}
+
+.navbar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid black;
+  aspect-ratio: 1/1;
+}
+
+.navbar span .dropdown-menu {
+  left: unset;
+  right: 0;
+}
+

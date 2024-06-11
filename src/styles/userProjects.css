@@ -1,0 +1,114 @@
+
+.project-body .card{
+   background: var(--bg-project) !important;
+   border: var(--border-project);
+   transition: all 0.25s ease-in-out;
+}
+
+.project-body .card-title{
+    color: var(--title-project) !important;
+}
+
+.project-body .card-title span:hover, .dir-structure .card-title span:hover{
+   text-decoration: underline;
+   cursor: pointer;
+}
+
+.project-body .card:hover{
+    box-shadow: var(--shadow-project);
+}
+
+.searchbar-container, .searchbar-container .input-group span, .searchbar-container input{
+    background-color: var(--bg-project) !important;
+}
+
+.searchbar-container input:focus{
+    box-shadow: none !important;
+}
+
+.create-project-button{
+    position: fixed;
+    bottom: 7%;
+    right: 0;
+}
+
+.create-project-button button:active{
+    transform: scale(0.9);
+}
+
+.project-container{
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+h1 a{
+    color: var(--text-color);
+    text-decoration: none !important;
+    position: relative;
+    display: inline-block;
+}
+
+h1 a.active{
+    color: var(--heading-nav) !important;
+}
+
+h1 a::after{
+    content: "";
+    width: 0;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--heading-nav);
+    position: absolute;
+    transition: all 0.2s;
+}
+
+h1 a:hover::after{
+   width: 100%;
+}
+
+h1 a.active::after{
+    width: 100%;
+}
+
+.invitation-body .card{
+    background: var(--bg-project) !important;
+    color: white;
+    border: var(--border-project);
+    transition: all 0.25s ease-in-out;
+ }
+ 
+ .invitation-body button:active{
+     transition: 0.2s all;
+     transform: scale(0.95);
+ }
+ 
+ .invitation-body .card-title{
+     color: #fdc141 !important;
+ }
+ 
+ .invitation-body .card:hover{
+     box-shadow: var(--shadow-project);
+ }
+
+ .divider-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+ .left-border{
+     height: 1px;
+     width: 100%;
+     background-color: white !important;
+ }
+
+ .right-border{
+     height: 1px;
+     width: 100%;
+     background-color: white !important;
+ }
+
+ .divider-section span{
+     font-size: bold;
+     margin: 5px;
+ }

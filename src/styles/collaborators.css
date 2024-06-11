@@ -1,0 +1,70 @@
+.collaborator-structure img{
+    width: 35px;
+    height: 35px;
+    margin: 10px;
+    border-radius: 50%;
+}
+
+.collaborator-list-box {
+    min-height: 95vh;
+    padding-top: 1rem;
+}
+
+.collaborator-structure .card{
+    background: var(--bg-project) !important;
+    color: var(--text-color);
+    border: var(--border-project);
+    transition: all 0.25s ease-in-out;
+ }
+ 
+ .collaborator-structure .card-title{
+     color: var(--title-project) !important;
+ }
+ 
+ .collaborator-structure .card:hover{
+     box-shadow: var(--shadow-project);
+ }
+
+ .dropdown-menu a{
+    background: inherit !important;
+ }
+
+ .dropdown-menu a:hover{
+    background: rgb(25, 86, 255) !important;
+    color: white !important;
+ }
+
+ .modal-wrapper{
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+ }
+
+.add-collab-container{
+    width: 75%;
+    height: 75%;
+    background-color: var(--bg-body);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+ 
+.collaborator-add-button{
+    position: sticky;
+    bottom: 10%;
+    float: right;
+}
+
+.collaborator-add-button button:active{
+    transform: scale(0.9);
+}

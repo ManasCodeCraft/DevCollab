@@ -1,0 +1,47 @@
+
+.footer {
+    margin-top: 2em;
+    background-color: var(--bg-color) !important;
+    width: 100%;
+    color: var(--text-color) !important;
+  }
+  
+  .footer-border {
+    height: 1rem;
+    width: 100%;
+    background: linear-gradient(to bottom, darkblue, black);
+  }
+  
+  .footer-styles {
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .footer-brand-name{
+     display: flex;
+     justify-content: flex-start;
+  }
+
+  .social-media-links-wrapper{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .social-media-links{
+     width: 200px;
+     display: flex;
+     justify-content: space-around
+  }
+
+  @media (max-width: 780px){
+     .social-media-links-wrapper{
+        float: none;
+     }
+     .social-media-links{
+        margin: auto;
+     }
+  }

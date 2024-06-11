@@ -1,0 +1,13 @@
+.console-logs-window, .error-logs-window{
+    height: 80vh;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 1rem;
+    overflow-y: scroll;
+}
+
+.console-logs-wrapper, .error-logs-wrapper{
+    padding: 2rem;
+}

@@ -1,0 +1,147 @@
+
+.carousel-control-prev,
+.carousel-control-next {
+  display: none;
+}
+
+.carousel-indicators button {
+    display: none;
+}
+
+.header-section{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--hero-bgcolor);
+    height: var(--hero-height);
+    color: whitesmoke;
+    z-index: 1;
+}
+
+.header-section canvas{
+    width: 100%;
+    height: var(--hero-height);
+    overflow: hidden !important;
+}
+
+.header-section h1 span{
+    color: rgb(255, 191, 72)
+}
+
+.bannerline{
+    position: absolute;
+    top: 0;
+    height: var(--hero-height);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bannertext{
+    margin: 20px !important;
+}
+
+.banner-subline{
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.bannerwrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* feature collaboration section  */
+
+.feature-section{
+    display: flex;
+    justify-content: center;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+.feature-wrapper{
+    margin-top: calc(var(--hero-height) + 10px);
+}
+
+.bright-centered-line-wrapper{
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.bright-centered-line{
+     width: 20px;
+     height: 100%;
+     background-color: rgb(34, 2, 108);
+     box-shadow: 1px 1px 35px 35px rgb(109, 202, 255);
+}
+
+.feature-media-section{
+    width: 50%;
+}
+
+.feature-media-section img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.feature-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+@media (max-width: 768px){
+    .feature-section{
+        flex-direction: column;
+    }
+    .feature-media-section{
+        width: 100%;
+        padding: 1em;
+    }
+    .feature-heading{
+        width: 80%;
+        margin: 1em auto 1em auto;
+    }
+}
+
+.feature-section h1 span{
+   color: rgb(200, 0, 200);
+}
+
+/* login trigger section  */
+
+.login-to-start{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+.login-to-start h1 span{
+    color : rgb(200, 0, 200);
+}
+
+.login-to-start .contentbox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

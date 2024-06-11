@@ -1,38 +1,79 @@
-.App {
-  text-align: center;
+*{
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root{
+  --hero-bgcolor: #000000;
+  --hero-height: 80vh;
+  --bg-body: rgb(1, 4, 20);
+  --bg-project: rgba(5, 16, 42, 0.7);
+  --border-project: 1px solid rgba(114, 83, 255, 0.4);
+  --shadow-project: 0 0 20px rgb(25, 86, 255);
+  --title-project: #21bcff;
+  --bg-nav: #343a40;
+  --heading-nav: #1ce558;
+  --text-color: white;
+  --bg-color: black;
+  --bg-stats: rgb(5, 30, 2);
+  --text-stats: rgb(121, 255, 80);
+  --shadow-stats: inset 0 0 10px rgb(20, 227, 26);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+body[data-bs-theme='dark'] {
+  --bg-body: rgb(1, 4, 20);
+  --bg-project: rgba(5, 16, 42, 0.7);
+  --border-project: 1px solid rgba(114, 83, 255, 0.4);
+  --shadow-project: 0 0 20px rgb(25, 86, 255);
+  --title-project: #21bcff;
+  --bg-nav: #343a40;
+  --heading-nav: #1ce558;
+  --text-color: white;
+  --bg-color: black;
+  --bg-stats: rgb(5, 30, 2);
+  --text-stats: rgb(121, 255, 80);
+  --shadow-stats: inset 0 0 10px rgb(20, 227, 26);
+  background-color: var(--bg-body) !important;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+body[data-bs-theme='light'] {
+  --bg-body: rgb(255, 255, 255);
+  --bg-project: white;
+  --border-project: 1px solid rgb(151, 151, 151);
+  --shadow-project: 0 0 5px rgba(0, 0, 0);
+  --title-project: #00039f;
+  --bg-nav: #ffffff;
+  --heading-nav: #01b01b;
+  --text-color: black;
+  --bg-color: white;
+  --bg-stats: rgb(134, 255, 97);
+  --text-stats: rgb(49, 92, 44);
+  --shadow-stats: inset 0 0 5px rgb(0, 103, 3);
+  background-color: var(--bg-body) !important;
+  color: black;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.nothing-to-show-container, .loading-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.loading-container .spinner-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button:active{
+   transition: all 0.2s ease-in-out;
+   transform: scale(0.9);
+}
+
+ion-icon{
+  font-size: 15px;
 }

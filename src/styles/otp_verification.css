@@ -1,0 +1,53 @@
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 30rem;
+    max-width: 500px;
+    z-index: 2000;
+    background: rgba(2, 2, 57, 0.5);
+    border: 2px solid rgba(41, 244, 255, 0.2);
+    box-shadow: 0 0 5px 5px rgb(105, 237, 255);
+}
+
+.form-container h1{
+    color: rgba(183, 215, 255, 0.5);
+    text-shadow: 0 0 1px rgb(143, 147, 255);
+}
+
+.btn-submit{
+    background-color: rgb(61, 0, 119);
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-error{
+    color: rgb(185, 0, 0);
+}
+
+.otp-input{
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    width: 80%;
+}
+
+.otpblock{
+    width: 15%;
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    aspect-ratio: 1/1;
+}
+
+@media (max-width: 900px) {
+    .form-container{
+        width: 75%;
+        padding: 1rem !important;
+    }
+}
