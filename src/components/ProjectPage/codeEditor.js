@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import BreadCrumbNav from "./ProjectsDir/breadCrumbNav";
-import { Controlled as CodeMirror } from "react-codemirror2";
+import { Controlled as CodeMirror } from '@uiw/react-codemirror';
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/blackboard.css";
 import "codemirror/theme/material.css";
