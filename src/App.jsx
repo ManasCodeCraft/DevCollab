@@ -15,6 +15,25 @@ import { ConfirmationModal, MessageModal, WaitingModal, message } from './global
 function App() {
   const dispatch = useDispatch();
   const dark = useSelector(state=>state.config.darkMode);
+  const BASE_URL = useSelector((state)=>state.config.baseURL);
+  useEffect(()=>{
+    if(BASE_URL){
+    var originalFetch = window.fetch;
+    window.fetch = function(url, options) {
+      const isFullUrl = url.startsWith('http');
+      if (!isFullUrl) {
+          if (!url.startsWith('/')) {
+              url = `/${url}`;
+          }
+      } else {
+          const path = url.replace(/^(https?:\/\/[^/]+)(.*)$/, '$2');
+          url = path.startsWith('/') ? path : `/${path}`;
+      }
+      url = `${BASE_URL}${url}`;
+
+      return originalFetch(url, options);
+    }
+  }}, [BASE_URL]);
 
   useEffect(()=>{
     const queryParams = new URLSearchParams(window.location.search); 

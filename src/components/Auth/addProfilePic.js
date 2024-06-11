@@ -17,6 +17,7 @@ export default function AddProfilePic() {
     const inputFileRef = useRef(null);
     const ProfileViewerRef = useRef(null);
     const [CropperInstance, setCropperInstance] = useState(null);
+    const baseURL = useSelector((state)=>state.config.baseURL);
 
     function handleChangeFile(e) {
         const profileimage = e.target.files[0];
@@ -60,7 +61,7 @@ export default function AddProfilePic() {
         const formData = new FormData();
         formData.append('profile', croppedBlob);
 
-        fetch('http://localhost:7000/auth/change-profile-pic', {
+        fetch(`${baseURL}/auth/change-profile-pic`, {
             method: 'POST',
             credentials: 'include',
             body: formData,

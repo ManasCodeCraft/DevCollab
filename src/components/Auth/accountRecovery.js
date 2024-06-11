@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { message } from '../../globalComponents/utilityModal.js';
 import { setWaitingModalParam } from '../../redux/slices/waitingModalSlice.js';
@@ -10,10 +10,11 @@ export default function AccountRecovery() {
     const navigate = useNavigate();
     const IdentityRef = useRef(null);
     const [errorState, setErrorState] = useState('');
+    const baseURL = useSelector((state)=>state.config.baseURL);
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const response = await fetch('http://localhost:7000/auth/account-recovery', {
+        const response = await fetch(`${baseURL}/auth/account-recovery`, {
             method: 'POST',
             credentials: 'include',
             headers: {
