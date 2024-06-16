@@ -1,0 +1,25 @@
+
+#screen-block-loading{
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000000;
+    position: fixed;
+    background-color: rgba(6, 77, 131, 0.471);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#devcollab-spinner{
+    font-size: 5rem;
+    font-weight: 900;
+    font-family:Arial, Helvetica, sans-serif;
+    color: #ffbd06;
+}

@@ -11,6 +11,7 @@ import { getAllProjects } from './redux/api/projectAPI';
 import { useDispatch, useSelector } from 'react-redux'
 import { getInvitations } from './redux/api/invitationAPI';
 import { ConfirmationModal, MessageModal, WaitingModal, message } from './globalComponents/utilityModal';
+import ScreenBlockLoading from './globalComponents/screenBlockLoading';
 
 function App() {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ function App() {
        <MessageModal/>
        <ConfirmationModal/>
        <WaitingModal/>
+       <ScreenBlockLoading/>
        <Routes>
           <Route path='/' element={<HomePage/>} />
           <Route path='/auth/*' element={<AuthForm/>}/>

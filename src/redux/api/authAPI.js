@@ -1,6 +1,7 @@
 import { setUser, setLoading, setError, logout, setUserInfo } from '../slices/authSlice'
+import { screenBlockLoading, screenBlockLoadingClose } from '../slices/screenBlockLoadingSlice';
 export function UserAuthenication(dispatch){
-     setLoading(true);
+     dispatch(screenBlockLoading("Please wait.. Checking your credentials"))
      fetch('http://localhost:7000/auth/user-authenication',{
         method: 'POST',
         credentials: 'include',
@@ -9,6 +10,7 @@ export function UserAuthenication(dispatch){
         },
         body: JSON.stringify({})
      }).then((response)=>{
+         dispatch(screenBlockLoadingClose())
          return response.json();
      }).then((data)=>{
          if(data.user){
@@ -20,8 +22,6 @@ export function UserAuthenication(dispatch){
              dispatch(setUser(dispatch_user_action));
          }
      }).catch((error)=>{
-         setLoading(false);
-         setError(error.message);
          console.log(error);
      })
 
