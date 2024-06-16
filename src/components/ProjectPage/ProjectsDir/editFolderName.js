@@ -15,7 +15,7 @@ export default function EditDirectoryNameModal({ directory, show, handleClose })
     }
 
     try {
-      const response = await fetch('http://localhost:7000/directory/edit-name', {
+      const response = await fetch('/directory/edit-name', {
         method: 'POST',
         credentials: 'include',
         headers: {

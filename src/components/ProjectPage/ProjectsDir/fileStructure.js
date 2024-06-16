@@ -40,7 +40,7 @@ export default function FileStructure(props) {
     };
 
     function deleteFile() {
-        fetch('http://localhost:7000/file/delete', {
+        fetch('/file/delete', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

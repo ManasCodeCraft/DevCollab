@@ -38,7 +38,7 @@ export default function AddFileFolderModal(props) {
         }
         dispatch(launchAutoCloseWaitingModal('Uploading file ...'))
         props.handleClose();
-        fetch('http://localhost:7000/file/upload', {
+        fetch('/file/upload', {
             method: 'POST',
             credentials: 'include',
             body: formData
@@ -60,7 +60,7 @@ export default function AddFileFolderModal(props) {
         e.preventDefault();
         const FileName = e.target.querySelector('#FileName');
         props.handleClose()
-        fetch('http://localhost:7000/file/create', {
+        fetch('/file/create', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -86,7 +86,7 @@ export default function AddFileFolderModal(props) {
     function addFolderSubmit(e) {
         e.preventDefault();
         const FolderName = e.target.querySelector('#FolderName');
-        fetch('http://localhost:7000/directory/create', {
+        fetch('/directory/create', {
             method: 'POST',
             credentials: 'include',
             headers: {

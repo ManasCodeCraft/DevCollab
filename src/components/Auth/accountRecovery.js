@@ -10,11 +10,10 @@ export default function AccountRecovery() {
     const navigate = useNavigate();
     const IdentityRef = useRef(null);
     const [errorState, setErrorState] = useState('');
-    const baseURL = useSelector((state)=>state.config.baseURL);
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const response = await fetch(`${baseURL}/auth/account-recovery`, {
+        const response = await fetch(`/auth/account-recovery`, {
             method: 'POST',
             credentials: 'include',
             headers: {

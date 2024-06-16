@@ -24,7 +24,7 @@ export default function FolderStructure(props){
   }
 
   function deleteDirectory() {
-    fetch('http://localhost:7000/directory/delete', {
+    fetch('/directory/delete', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

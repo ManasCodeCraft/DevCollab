@@ -4,7 +4,6 @@ import 'cropperjs/dist/cropper.css';
 import '../../styles/addProfile.css';
 import dataURItoBlob from 'data-uri-to-blob';
 import { useDispatch, useSelector } from 'react-redux';
-import { message, waitHere } from '../../globalComponents/utilityModal';
 import { setModalAfterText, setWaitingCompleted, setWaitingModalParam } from '../../redux/slices/waitingModalSlice';
 import { setProfilePic } from '../../redux/slices/authSlice';
 import { Container, Form, Button, Image } from 'react-bootstrap';
@@ -17,7 +16,6 @@ export default function AddProfilePic() {
     const inputFileRef = useRef(null);
     const ProfileViewerRef = useRef(null);
     const [CropperInstance, setCropperInstance] = useState(null);
-    const baseURL = useSelector((state)=>state.config.baseURL);
 
     function handleChangeFile(e) {
         const profileimage = e.target.files[0];
@@ -61,7 +59,7 @@ export default function AddProfilePic() {
         const formData = new FormData();
         formData.append('profile', croppedBlob);
 
-        fetch(`${baseURL}/auth/change-profile-pic`, {
+        fetch(`/auth/change-profile-pic`, {
             method: 'POST',
             credentials: 'include',
             body: formData,

@@ -55,7 +55,7 @@ export default function SignUpForm() {
         show: true,
     }))
     try {
-      const response = await fetch('http://localhost:7000/auth/create-account', {
+      const response = await fetch('/auth/create-account', {
         method: 'POST',
         credentials: 'include',
         headers: {

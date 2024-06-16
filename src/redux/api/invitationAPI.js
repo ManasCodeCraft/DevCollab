@@ -1,7 +1,7 @@
 import { setInvitations, setLoading, setError } from '../slices/invitationSlice'
 export function getInvitations(dispatch){
      setLoading(true);
-     fetch('http://localhost:7000/invitation/get-all',{
+     fetch('/invitation/get-all',{
         method: 'POST',
         credentials: 'include',
         headers: {

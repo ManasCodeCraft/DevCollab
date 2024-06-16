@@ -31,7 +31,7 @@ export default function CollaboratorStructure(props) {
       console.log("CollaboratorId and ProjectId not found");
       return;
     }
-    fetch("http://localhost:7000/project/remove-collaborator", {
+    fetch("/project/remove-collaborator", {
       method: "POST",
       credentials: "include",
       headers: {

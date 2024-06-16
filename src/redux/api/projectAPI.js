@@ -8,7 +8,7 @@ import {
 } from "../slices/projectSlice";
 export function getAllProjects(dispatch) {
   dispatch(setLoading(true));
-  fetch("http://localhost:7000/project/get-all", {
+  fetch("/project/get-all", {
     method: "POST",
     credentials: "include",
     headers: {
@@ -36,7 +36,7 @@ export async function getDirectory(dispatch, id) {
   dispatch(setLoading(true));
   try {
     const response = await fetch(
-      "http://localhost:7000/directory/get-content",
+      "/directory/get-content",
       {
         method: "POST",
         credentials: "include",

@@ -19,7 +19,7 @@ export default function CustomNavbar() {
        confirmIt('LogOut', 'Are your sure you want to log out?', userLogout, null, 'Log out', 'cancel', 'danger', dispatch);
   }
   const userLogout = () => {
-    fetch('http://localhost:7000/auth/user-logout', {
+    fetch('/auth/user-logout', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -42,7 +42,7 @@ export default function CustomNavbar() {
     confirmIt('Delete Account', 'Are your sure you want to delete your account?', deleteAccount, null, 'Delete Account', 'cancel', 'danger', dispatch);
   }
   const deleteAccount = () => {
-    fetch('http://localhost:7000/auth/user-deleteAccount', {
+    fetch('/auth/user-deleteAccount', {
       method: 'POST',
       credentials: 'include',
       headers: {

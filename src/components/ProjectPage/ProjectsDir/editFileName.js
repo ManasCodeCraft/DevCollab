@@ -15,7 +15,7 @@ export default function EditFileNameModal({ file, show, handleClose }) {
     }
 
     try {
-      const response = await fetch('http://localhost:7000/file/edit-name', {
+      const response = await fetch('/file/edit-name', {
         method: 'POST',
         credentials: 'include',
         headers: {

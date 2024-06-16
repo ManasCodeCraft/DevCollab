@@ -27,7 +27,7 @@ export default function AddCollaboratorModal({ onClose, onModalClick }) {
             return;
         }
         setLoading(true);
-        fetch('http://localhost:7000/auth/search-username', {
+        fetch('/auth/search-username', {
             method: 'POST',
             credentials: 'include',
             headers: {

@@ -117,7 +117,7 @@ export default function CodeEditor() {
 
   const saveContent = (content) => {
     setsavebtnDisabled(true);
-    fetch("http://localhost:7000/file/save", {
+    fetch("/file/save", {
       method: "POST",
       credentials: "include",
       headers: {

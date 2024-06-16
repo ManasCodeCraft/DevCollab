@@ -120,7 +120,7 @@ export default function OTP_verification() {
     }
     var otp = getOTPValue(-1);
     console.log("Entered OTP:", otp);
-    fetch("http://localhost:7000/auth/verify-otp", {
+    fetch("/auth/verify-otp", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -150,7 +150,7 @@ export default function OTP_verification() {
   const handleResendOtp = () => {
     setResendDisabled(true);
     console.log("Resending OTP...");
-    fetch('http://localhost:7000/auth/resend-otp', {
+    fetch('/auth/resend-otp', {
       method: 'POST',
       credentials: 'include',
       headers: {

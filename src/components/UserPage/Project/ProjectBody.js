@@ -6,6 +6,7 @@ import { deleteProjectById, popAllDirStack, pushDirStack, setCurrentProject, set
 import { Dropdown, Card } from 'react-bootstrap';
 import { confirmIt, message } from '../../../globalComponents/utilityModal';
 import { getDirectory } from '../../../redux/api/projectAPI';
+import { screenBlockLoading, screenBlockLoadingClose } from '../../../redux/slices/screenBlockLoadingSlice';
 
 export default function ProjectBody(props) {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export default function ProjectBody(props) {
   }
 
   function deleteProject() {
-    fetch('http://localhost:7000/project/delete', {
+    fetch('/project/delete', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -53,7 +54,7 @@ export default function ProjectBody(props) {
     if(!props.project.isDeployed){
         return;
     }
-    fetch('http://localhost:7000/host/logs', {
+    fetch('/host/logs', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -80,10 +81,12 @@ export default function ProjectBody(props) {
   }
 
   async function openProject() {
+    dispatch(screenBlockLoading("Loading your projects... Please wait"))
     dispatch(popAllDirStack());
     dispatch(setCurrentProject(props.project));
     await getDirectory(dispatch, props.project.rootDirectory)
     getLogsDetails();
+    dispatch(screenBlockLoadingClose())
     navigate('/project/structure');
   }
 

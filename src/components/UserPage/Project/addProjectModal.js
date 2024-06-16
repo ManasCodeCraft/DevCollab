@@ -8,7 +8,7 @@ export default function AddProjectModal({ show, handleClose }) {
   function addProjectSubmit(e) {
     e.preventDefault();
     const projectName = e.target.elements.projectName.value;
-    fetch('http://localhost:7000/project/create', {
+    fetch('/project/create', {
       method: 'POST',
       credentials: 'include',
       headers: {

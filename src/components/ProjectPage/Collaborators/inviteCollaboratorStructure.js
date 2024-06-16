@@ -8,7 +8,7 @@ export default function InviteCollaboratorStructure(props) {
     const [invited, setInvited] = useState(false);
 
     function sendInvitation(recipientId, projectId) {
-        fetch('http://localhost:7000/invitation/send', {
+        fetch('/invitation/send', {
             method: 'POST',
             credentials: 'include',
             headers: {

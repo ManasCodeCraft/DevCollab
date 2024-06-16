@@ -12,7 +12,7 @@ export default function InvitationBody(props) {
 
     function acceptInvitation() {
         setIsDisabled(true);
-        fetch('http://localhost:7000/invitation/accept', {
+        fetch('/invitation/accept', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -34,7 +34,7 @@ export default function InvitationBody(props) {
 
     function rejectInvitation() {
         setIsDisabled(true);
-        fetch('http://localhost:7000/invitation/reject', {
+        fetch('/invitation/reject', {
             method: 'POST',
             credentials: 'include',
             headers: {

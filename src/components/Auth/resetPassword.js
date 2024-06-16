@@ -22,7 +22,7 @@ export default function ResetPassword() {
     });
 
     try {
-      const response = await fetch(`http://localhost:7000/auth/reset-password`, {
+      const response = await fetch(`/auth/reset-password`, {
         method: 'POST',
         credentials: 'include',
         headers: {

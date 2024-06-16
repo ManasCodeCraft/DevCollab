@@ -2,7 +2,7 @@ import { setUser, setLoading, setError, logout, setUserInfo } from '../slices/au
 import { screenBlockLoading, screenBlockLoadingClose } from '../slices/screenBlockLoadingSlice';
 export function UserAuthenication(dispatch){
      dispatch(screenBlockLoading("Please wait.. Checking your credentials"))
-     fetch('http://localhost:7000/auth/user-authenication',{
+     fetch('/auth/user-authenication',{
         method: 'POST',
         credentials: 'include',
         headers: {

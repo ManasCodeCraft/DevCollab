@@ -23,16 +23,9 @@ const projectSlice = createSlice({
       let id = action.payload
       for(let project of state.projects){
          if(project.projectId === id){
-             project.isHosted = true
+             project.isDeployed = true
              project.isRunning = true;
              state.currentProject = project;
-             break;
-         }
-      }
-
-      for(let dir of state.dirStack){
-         if(dir.projectId){
-             dir = state.currentProject;
              break;
          }
       }

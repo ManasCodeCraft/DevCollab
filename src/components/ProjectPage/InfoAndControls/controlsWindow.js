@@ -49,7 +49,7 @@ export default function ControlsWindow() {
 
   const hostProject = () => {
     dispatch(launchAutoCloseWaitingModal("We are setting things up for you.."));
-    fetch("http://localhost:7000/host/hostProject", {
+    fetch("/host/hostProject", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -80,7 +80,7 @@ export default function ControlsWindow() {
 
   const disableHosting = () => {
     setDisableBtnLoading(true);
-    fetch("http://localhost:7000/host/disableHosting", {
+    fetch("/host/disableHosting", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -118,7 +118,7 @@ export default function ControlsWindow() {
 
   const enableHosting = () => {
     setEnableBtnLoading(true);
-    fetch("http://localhost:7000/host/enableHosting", {
+    fetch("/host/enableHosting", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -149,7 +149,7 @@ export default function ControlsWindow() {
 
   const reload = () => {
     setReloadBtnLoading(true);
-    fetch("http://localhost:7000/host/reload", {
+    fetch("/host/reload", {
       method: "POST",
       credentials: "include",
       headers: {

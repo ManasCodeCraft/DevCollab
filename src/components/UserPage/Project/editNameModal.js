@@ -13,7 +13,7 @@ export default function EditNameModal({project, show, handleClose}) {
     if(!newNameref.current && !newNameref.current.value){
         return;
     }
-    fetch('http://localhost:7000/project/edit-name', {
+    fetch('/project/edit-name', {
       method: 'POST',
       credentials: 'include',
       headers: {
