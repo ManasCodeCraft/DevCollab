@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthForm from "./components/Auth/authForm";
 import UserPage from "./components/UserPage/userPage";
 import ProjectPage from "./components/ProjectPage/projectPage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { UserAuthenication } from "./redux/api/authAPI";
 import { getAllProjects } from "./redux/api/projectAPI";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +20,7 @@ import ScreenBlockLoading from "./globalComponents/screenBlockLoading";
 
 function App() {
   const dispatch = useDispatch();
+  const [fetchModified, setFetchModified] = useState(false);
   const dark = useSelector((state) => state.config.darkMode);
   const BASE_URL = useSelector((state) => state.config.baseURL);
   useEffect(() => {
@@ -27,26 +28,31 @@ function App() {
       var originalFetch = window.fetch;
       window.fetch = function (url, options) {
         if (url.startsWith("/")) {
-           url = url + BASE_URL
+          url = BASE_URL+url;
         }
         return originalFetch(url, options);
       };
+      setFetchModified(true);
     }
   }, [BASE_URL]);
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const error = queryParams.get("error");
-    if (error) {
-      message("Error", error, dispatch);
+    if (fetchModified) {
+      const queryParams = new URLSearchParams(window.location.search);
+      const error = queryParams.get("error");
+      if (error) {
+        message("Error", error, dispatch);
+      }
     }
-  }, []);
+  }, [fetchModified]);
 
   useEffect(() => {
-    UserAuthenication(dispatch);
-    getAllProjects(dispatch);
-    getInvitations(dispatch);
-  }, []);
+    if (fetchModified) {
+      UserAuthenication(dispatch);
+      getAllProjects(dispatch);
+      getInvitations(dispatch);
+    }
+  }, [fetchModified]);
 
   useEffect(() => {
     document.body.setAttribute("data-bs-theme", dark ? "dark" : "light");
