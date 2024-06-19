@@ -22,7 +22,7 @@ export default function Header() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="display-4 fw-bold bannertext"
           >
-            Build and Host Your <span>Node.js Projects</span>
+            Collaborate, Manage and Deploy your <span>NodeJs Projects</span>
           </motion.h1>
           <motion.div
             initial={{ opacity: 0 }}
@@ -37,12 +37,12 @@ export default function Header() {
               </Carousel.Item>
               <Carousel.Item>
                 <p className="banner-subline text-secondary fs-3 fw-bold">
-                  We Value Your Time, Host with One Click
+                  Manage and organize projects effortlessly
                 </p>
               </Carousel.Item>
               <Carousel.Item>
                 <p className="banner-subline text-secondary fs-3 fw-bold">
-                  Easy to Set Up and Organize
+                  Deploy your NodeJs projects with ease
                 </p>
               </Carousel.Item>
             </Carousel>

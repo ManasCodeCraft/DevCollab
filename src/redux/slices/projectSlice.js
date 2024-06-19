@@ -20,12 +20,16 @@ const projectSlice = createSlice({
       state.error = null;
     },
     setProjectHostedAndRunning(state, action){
-      let id = action.payload
+      let id = action.payload.projectId;
+      state.currentProject.url = action.payload.url;
+      state.currentProject.isDeployed = true;
+      state.currentProject.isRunning = true;
+      state.currentProject.todayReq = 0;
+      state.currentProject.thisMonthReq = 0;
+
       for(let project of state.projects){
          if(project.projectId === id){
-             project.isDeployed = true
-             project.isRunning = true;
-             state.currentProject = project;
+             project = state.currentProject;
              break;
          }
       }

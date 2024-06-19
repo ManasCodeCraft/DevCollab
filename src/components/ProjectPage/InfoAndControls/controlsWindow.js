@@ -68,7 +68,9 @@ export default function ControlsWindow() {
             );
           });
         } else {
-          dispatch(setProjectHostedAndRunning(projectId));
+          response.json().then((data) => {
+             dispatch(setProjectHostedAndRunning({projectId: projectId, url: data.url}));
+          });
         }
       })
       .catch((error) => {
