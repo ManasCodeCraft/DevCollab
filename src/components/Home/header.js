@@ -41,7 +41,7 @@ export default function Header() {
                 </p>
               </Carousel.Item>
               <Carousel.Item>
-                <p className="banner-subline text-secondary fs-3 fw-bold">
+                <p className="banner-subline text-secondary fs-3 fw-bold text-center">
                   Deploy your NodeJs projects with ease
                 </p>
               </Carousel.Item>
