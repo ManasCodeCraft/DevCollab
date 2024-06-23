@@ -124,7 +124,7 @@ export function WaitingModal() {
                     (params.status=='waiting')?
                     <>
                     <Container fluid className='text-center'>
-                        <ProgressBar now={100} striped animated variant="success"  className='mt-4' />
+                        <ProgressBar now={params.progress || 100} striped animated variant="success"  className='mt-4' />
                     </Container>
                     <Container>
                         <p className='text-center mt-3'>{params.waiting_text}</p>

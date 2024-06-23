@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditNameModal from './editNameModal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteProjectById, popAllDirStack, pushDirStack, setCurrentProject, setProjectLogs } from '../../../redux/slices/projectSlice';
 import { Dropdown, Card } from 'react-bootstrap';
 import { confirmIt, message } from '../../../globalComponents/utilityModal';
@@ -11,6 +11,7 @@ import { screenBlockLoading, screenBlockLoadingClose } from '../../../redux/slic
 export default function ProjectBody(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const baseURL = useSelector((state)=>state.config.baseURL);
 
   const [editShow, setEditShow] = useState(false)
   const handleEditNameModal = ()=>{
@@ -80,6 +81,10 @@ export default function ProjectBody(props) {
       });
   }
 
+  async function exportProject(){
+      window.location.href = `${baseURL}/project/download/${props.project.projectId}`    
+  }
+
   async function openProject() {
     dispatch(screenBlockLoading("Loading your projects... Please wait"))
     dispatch(popAllDirStack());
@@ -122,7 +127,7 @@ export default function ProjectBody(props) {
                   <Dropdown.Item onClick={handleEditNameModal} >
                     <ion-icon name="pencil-outline"></ion-icon> Edit Name
                   </Dropdown.Item>
-                  <Dropdown.Item>
+                  <Dropdown.Item onClick={exportProject}>
                     <ion-icon name="download-outline"></ion-icon> Export Project
                   </Dropdown.Item>
                 </Dropdown.Menu>

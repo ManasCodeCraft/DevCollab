@@ -5,6 +5,7 @@ const initialState = {
   after_text: null,
   show: false,
   autoClose: false,
+  progress: null,
   status: 'waiting', // waiting, completed, error
 };
 
@@ -18,12 +19,16 @@ const waitingModalSlice = createSlice({
       state.show = action.payload.show || false;
       state.autoClose = action.payload.autoClose || false;
       state.status = action.payload.status || 'waiting';
+      state.progress = action.payload.progress || null;
     },
     launchAutoCloseWaitingModal(state, action){
        state.show = true;
        state.waiting_text = action.payload;
        state.autoClose = true;
        state.status = 'waiting';
+    },
+    setWaitingModalProgress(state, action){
+      state.progress = action.payload;
     },
     setModalWaitingText(state, action){
         state.waiting_text = action.payload;
@@ -46,5 +51,5 @@ const waitingModalSlice = createSlice({
   },
 });
 
-export const {launchAutoCloseWaitingModal ,setWaitingModalParam, ShowWaitingModal, HideWaitingModal, setModalAfterText, setModalWaitingText, setWaitingCompleted } = waitingModalSlice.actions;
+export const {setWaitingModalProgress , launchAutoCloseWaitingModal ,setWaitingModalParam, ShowWaitingModal, HideWaitingModal, setModalAfterText, setModalWaitingText, setWaitingCompleted } = waitingModalSlice.actions;
 export default waitingModalSlice.reducer;
