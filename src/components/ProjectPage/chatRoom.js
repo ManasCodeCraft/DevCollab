@@ -1,52 +1,21 @@
 import React, {useState, useRef, useEffect} from 'react';
 import '../../styles/chatRoom.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { pushMessage } from '../../redux/slices/chatSlice';
 
-export default function ChatRoom() {
-  const chatdataSample = [
-    { 'name': 'You',
-      'text': 'Hello i am here',
-      'time': '12:00 AM',
-      'self': true
-    },
-    { 'name': 'Person',
-      'text': 'I am here',
-      'time': '12:00 AM',
-      'self': false
-    },
-    {
-        'name': 'Another Person',
-        'text': 'I am here',
-        'time': '12:00 AM',
-       'self': false
-    },
-    {
-        'name': 'You',
-        'text': 'Are you sure you want to this project?',
-        'time': '12:00 AM',
-       'self': true
-    },
-    {
-        'name': 'Person',
-        'text': 'I am here to help you in this project',
-        'time': '12:00 AM',
-       'self': false
-    },
-    {
-        'name': 'Another Person',
-        'text': 'I am here to help you in this project',
-        'time': '12:00 AM',
-       'self': false
-    }
-  ]
+export default function ChatRoom({sendMessage}) {
+  const chatdata = useSelector(state=>state.chat);
+  const dispatch = useDispatch();
   const chatContainerRef = useRef(null);
-  const [chatdata, setChatData] = useState(chatdataSample)
+  const inputRef = useRef(null);
 
   function handleSubmit(e){
       e.preventDefault()
-      const msg = e.target.querySelector('.user-message').value;
+      const msg = inputRef.current.value;
       if(msg.length > 0){
-          setChatData([...chatdata, {'name': 'You', 'text': msg, 'time': '12:00 AM', 'self': true}])
-          e.target.querySelector('.user-message').value = ''
+          const data = sendMessage(msg)
+          dispatch(pushMessage(data));
+          inputRef.current.value = '';
       }
   }
 
@@ -72,7 +41,7 @@ export default function ChatRoom() {
     </div>
 
     <form className="form-group d-flex chat-message-send" method='POST' onSubmit={handleSubmit}>
-          <input type="text" className="form-control user-message" placeholder="Enter your message" />
+          <input type="text" className="form-control user-message" placeholder="Enter your message" ref={inputRef} />
           <button className="btn btn-success mx-2" type='submit'>Send</button>
     </form>
 

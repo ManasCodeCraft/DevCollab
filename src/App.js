@@ -17,12 +17,24 @@ import {
   message,
 } from "./globalComponents/utilityModal";
 import ScreenBlockLoading from "./globalComponents/screenBlockLoading";
+import connectSocket from "./websocketInit";
+import useDirSocketInit from "./customHooks/sockets/useDirSocketInit";
+import useActivitySocketInit from "./customHooks/sockets/useActivitySocketInit";
 
 function App() {
   const dispatch = useDispatch();
   const [fetchModified, setFetchModified] = useState(false);
   const dark = useSelector((state) => state.config.darkMode);
   const BASE_URL = useSelector((state) => state.config.baseURL);
+  const user = useSelector(state=>state.auth.user);
+  const [socket, setSocket] = useState({
+    dirStructureSocket: null,
+    activityLogSocket: null
+  });
+  
+  useDirSocketInit(socket.dirStructureSocket);
+  useActivitySocketInit(socket.activityLogSocket);
+
   useEffect(() => {
     if (BASE_URL) {
       var originalFetch = window.fetch;
@@ -53,6 +65,14 @@ function App() {
       getInvitations(dispatch);
     }
   }, [fetchModified]);
+
+
+  useEffect(()=>{
+    if(user && BASE_URL){
+       const sockets = connectSocket(BASE_URL, user.userid);
+       setSocket(sockets)
+    }
+  },[user, BASE_URL]);
 
   useEffect(() => {
     document.body.setAttribute("data-bs-theme", dark ? "dark" : "light");

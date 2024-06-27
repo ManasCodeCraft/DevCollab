@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createNewProject } from '../../../redux/slices/projectSlice';
 import { launchAutoCloseWaitingModal, setModalWaitingText, setWaitingCompleted, setWaitingModalProgress } from '../../../redux/slices/waitingModalSlice';
 import { message } from '../../../globalComponents/utilityModal';
+import useDirSocket from '../../../customHooks/sockets/useDirSocket';
 
 export default function AddProjectModal({ show, handleClose }) {
   const dispatch = useDispatch();
   const baseURL = useSelector(state => state.config.baseURL);
+  const socketOp = useDirSocket();
   const formRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -33,6 +35,7 @@ export default function AddProjectModal({ show, handleClose }) {
       })
       .then((data) => {
         dispatch(createNewProject(data));
+        socketOp({type: 'create', target: 'project', data: data, projectData: data})
       })
       .catch((error) => {
         console.log(error);

@@ -7,6 +7,7 @@ import confirmReducer from './slices/confirmationSlice'
 import waitReducer from './slices/waitingModalSlice'
 import configReducer from './slices/configSlice'
 import screenBlockLoadingReducer from './slices/screenBlockLoadingSlice'
+import chatReducer from './slices/chatSlice'
 
 const rootReducer = combineReducers({
      auth: authReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
      confirm: confirmReducer,
      wait: waitReducer,
      config: configReducer,
-     loading: screenBlockLoadingReducer
+     loading: screenBlockLoadingReducer,
+     chat: chatReducer,
 });
 
 export default rootReducer;

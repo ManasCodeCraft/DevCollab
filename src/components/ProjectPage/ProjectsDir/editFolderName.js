@@ -3,10 +3,12 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { message } from '../../../globalComponents/utilityModal';
 import { setDirectoryNewName } from '../../../redux/slices/projectSlice';
+import useDirSocket from '../../../customHooks/sockets/useDirSocket';
 
 export default function EditDirectoryNameModal({ directory, show, handleClose }) {
   const newNameref = useRef();
   const dispatch = useDispatch();
+  const socketOp = useDirSocket();
 
   async function editDirectoryNameSubmit(e) {
     e.preventDefault();
@@ -35,6 +37,8 @@ export default function EditDirectoryNameModal({ directory, show, handleClose })
 
       const data = await response.json();
       dispatch(setDirectoryNewName({ id: directory.dirId, newName: data }));
+      socketOp({type:'rename', target: 'folder', data: data});
+    
       handleClose();
     } catch (err) {
       message('500', err.message || 'Unexpected error:', dispatch);

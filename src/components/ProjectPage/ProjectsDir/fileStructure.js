@@ -6,9 +6,11 @@ import { setCurrentlyOpenedFile } from '../../../redux/slices/projectSlice';
 import EditFileNameModal from './editFileName'; 
 import { confirmIt, message } from '../../../globalComponents/utilityModal';
 import { deleteFileById } from '../../../redux/slices/projectSlice'; 
+import useDirSocket from '../../../customHooks/sockets/useDirSocket';
 
 export default function FileStructure(props) {
     const navigate = useNavigate();
+    const socketOp = useDirSocket();
     const dispatch = useDispatch();
     const [editFileNameShow, setEditFileNameShow] = useState(false);
 
@@ -56,6 +58,7 @@ export default function FileStructure(props) {
                     throw new Error(response.message || 'An error occurred while deleting file');
                 } else {
                     dispatch(deleteFileById(props.file.fileId)); // Ensure this action exists
+                    socketOp({type: 'delete', target: 'file', data: props.file.fileId})
                 }
             })
             .catch((err) => {

@@ -7,9 +7,12 @@ import { Dropdown, Card } from 'react-bootstrap';
 import { confirmIt, message } from '../../../globalComponents/utilityModal';
 import { getDirectory } from '../../../redux/api/projectAPI';
 import { screenBlockLoading, screenBlockLoadingClose } from '../../../redux/slices/screenBlockLoadingSlice';
+import useDirSocket from '../../../customHooks/sockets/useDirSocket';
+import fetchActivityLogs from '../../../redux/api/activityLogAPI';
 
 export default function ProjectBody(props) {
   const dispatch = useDispatch();
+  const socketOp = useDirSocket();
   const navigate = useNavigate();
   const baseURL = useSelector((state)=>state.config.baseURL);
 
@@ -44,6 +47,7 @@ export default function ProjectBody(props) {
         }
         else{
             dispatch(deleteProjectById(props.project.projectId))
+            socketOp({type: 'delete', target: 'project', data: props.project.projectId, projectData: props.project})
         }
       })
       .catch((err) => {
@@ -90,7 +94,7 @@ export default function ProjectBody(props) {
     dispatch(popAllDirStack());
     dispatch(setCurrentProject(props.project));
     await getDirectory(dispatch, props.project.rootDirectory)
-    getLogsDetails();
+    fetchActivityLogs(props.project.projectId ,dispatch);
     dispatch(screenBlockLoadingClose())
     navigate('/project/structure');
   }

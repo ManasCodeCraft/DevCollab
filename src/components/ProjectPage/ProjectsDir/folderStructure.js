@@ -5,8 +5,10 @@ import { getDirectory } from '../../../redux/api/projectAPI'
 import EditDirectoryNameModal from './editFolderName'
 import { confirmIt, message } from '../../../globalComponents/utilityModal'
 import { deleteDirectoryById } from '../../../redux/slices/projectSlice'
+import useDirSocket from '../../../customHooks/sockets/useDirSocket'
 export default function FolderStructure(props){
     const dispatch = useDispatch()
+    const socketOp = useDirSocket();
     const [editDirNameShow, setEditDirName]  = useState(false)
     const handleDirNameClose = ()=>{
         setEditDirName(false)
@@ -41,6 +43,7 @@ export default function FolderStructure(props){
         }
         else{
             dispatch(deleteDirectoryById(props.dir.dirId))
+            socketOp({type: 'delete', target: 'folder', data: props.dir.dirId})
         }
       })
       .catch((err) => {

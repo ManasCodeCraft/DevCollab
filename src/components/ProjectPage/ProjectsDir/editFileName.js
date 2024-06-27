@@ -3,10 +3,12 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { message } from '../../../globalComponents/utilityModal';
 import { setFileNewName } from '../../../redux/slices/projectSlice'; 
+import useDirSocket from '../../../customHooks/sockets/useDirSocket';
 
 export default function EditFileNameModal({ file, show, handleClose }) {
   const newNameRef = useRef();
   const dispatch = useDispatch();
+  const socketOp = useDirSocket();
 
   async function editFileNameSubmit(e) {
     e.preventDefault();
@@ -35,6 +37,7 @@ export default function EditFileNameModal({ file, show, handleClose }) {
 
       const data = await response.json();
       dispatch(setFileNewName({ id: file.fileId, newName: data })); 
+      socketOp({type:'rename', target: 'file', data: data});
       handleClose();
     } catch (err) {
       message('500', err.message || 'Unexpected error:', dispatch);

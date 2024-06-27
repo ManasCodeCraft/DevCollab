@@ -1,0 +1,18 @@
+.activity-log-body .card{
+    background: var(--bg-project) !important;
+    border: var(--border-project);
+    transition: all 0.25s ease-in-out;
+ }
+ 
+ .activity-log-body .username{
+     color: #fdc141 !important;
+ }
+ 
+ .activity-log-body .card:hover{
+     box-shadow: var(--shadow-project);
+ }
+
+ .activity-log-container{
+    display:flex;
+    flex-direction: column-reverse;
+ }

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import { addFile, addFolder } from '../../../redux/slices/projectSlice';
 import { launchAutoCloseWaitingModal, setWaitingCompleted } from '../../../redux/slices/waitingModalSlice';
+import useDirSocket from '../../../customHooks/sockets/useDirSocket';
 
 export function AddFileFolderButton({handleShow}) {
     return (
@@ -20,6 +21,7 @@ export function AddFileFolderButton({handleShow}) {
 
 export default function AddFileFolderModal(props) {
     const dispatch = useDispatch();
+    const socketOp = useDirSocket();
     const fileInputRef = useRef(null);
     const uploadform = useRef(null);
     const projectId = useSelector(state => state.project.currentWorkingDirectory.projectId);
@@ -49,6 +51,7 @@ export default function AddFileFolderModal(props) {
             return response.json();
         }).then((data) => { 
             dispatch(addFile(data))
+            socketOp({type:'create', target:'file', data: data});
             dispatch(setWaitingCompleted())
         }).catch((error) => {
             console.log(error);
@@ -78,6 +81,7 @@ export default function AddFileFolderModal(props) {
             return response.json();
         }).then((data) => {
             dispatch(addFile(data))
+            socketOp({type:'create', target:'file', data: data});
         }).catch((error) => {
             console.log(error);
         });
@@ -104,6 +108,7 @@ export default function AddFileFolderModal(props) {
             return response.json();
         }).then((data) => {
              dispatch(addFolder(data))
+            socketOp({type:'create', target:'folder', data: data});
         }).catch((error) => {
             console.log(error);
         });

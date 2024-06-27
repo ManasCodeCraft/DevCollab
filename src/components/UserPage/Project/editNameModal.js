@@ -3,10 +3,12 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { message } from '../../../globalComponents/utilityModal';
 import { setProjectNewName } from '../../../redux/slices/projectSlice';
+import useDirSocket from '../../../customHooks/sockets/useDirSocket';
 
 export default function EditNameModal({project, show, handleClose}) {
   const newNameref = useRef()
   const dispatch = useDispatch()
+  const socketOp = useDirSocket();
 
   function editProjectNameSubmit(e) {
     e.preventDefault();
@@ -32,7 +34,8 @@ export default function EditNameModal({project, show, handleClose}) {
         return response.json();
       })
       .then((data) => {
-        dispatch(setProjectNewName({id: project.projectId, newName: data}))        
+        dispatch(setProjectNewName({id: project.projectId, newName: data}))     
+        socketOp({type: 'rename', target: 'project', data: {id: project.projectId, newName: data}, projectData: project})
         handleClose();
       })
       .catch((err) => {

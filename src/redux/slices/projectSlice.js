@@ -88,6 +88,26 @@ const projectSlice = createSlice({
      }
 
     },
+    setActivityLogs(state, action){
+       let id = action.payload.id;
+       let logs = action.payload.logs;
+       for(let project of state.projects){
+         if(project.projectId == id){
+           project.activityLogs = logs;
+           state.currentProject.activityLogs = logs;
+           break
+         }
+       }
+    },
+
+    addActivityLog(state, action){
+        const id = action.payload.project;
+        if(state.currentProject.projectId == id){
+              console.log(action.payload)
+              state.currentProject.activityLogs.push(action.payload)
+        }
+    },
+
     setProjectNewName(state, action){
        let id = action.payload.id 
        let newName = action.payload.newName;
@@ -226,5 +246,5 @@ const projectSlice = createSlice({
   },
 });
 
-export const {setFileContent, setProjectLogs, setRunningEnable, setRunningDisable, setProjectHostedAndRunning, setFileNewName ,deleteFileById ,deleteDirectoryById ,setDirectoryNewName ,addFolder, addFile, replaceExistingProject ,createNewProject ,setProjectNewName, setCurrentlyOpenedFile ,setCurrentWorkingDirectory, setCurrentProject, setProjects, pushDirStack, popDirStack, popAllDirStack, popUptoIndexDirStack, setLoading, setError, deleteProjectById } = projectSlice.actions;
+export const { setActivityLogs, addActivityLog ,setFileContent, setProjectLogs, setRunningEnable, setRunningDisable, setProjectHostedAndRunning, setFileNewName ,deleteFileById ,deleteDirectoryById ,setDirectoryNewName ,addFolder, addFile, replaceExistingProject ,createNewProject ,setProjectNewName, setCurrentlyOpenedFile ,setCurrentWorkingDirectory, setCurrentProject, setProjects, pushDirStack, popDirStack, popAllDirStack, popUptoIndexDirStack, setLoading, setError, deleteProjectById } = projectSlice.actions;
 export default projectSlice.reducer;
