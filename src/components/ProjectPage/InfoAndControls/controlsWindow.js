@@ -2,25 +2,27 @@ import React, { useState, useEffect } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { message } from "../../../globalComponents/utilityModal";
-import {
-  launchAutoCloseWaitingModal,
-  setWaitingCompleted,
-} from "../../../redux/slices/waitingModalSlice";
-import {
-  setProjectHostedAndRunning,
-  setRunningDisable,
-  setRunningEnable,
-} from "../../../redux/slices/projectSlice";
+import { setRunningStatus } from "../../../redux/slices/projectSlice";
+import { getRunningStatusSocket } from "../../../websocketInit";
+import ButtonWithLoading from "./buttonWithLoading";
+import NpmInstallModal from "./npmInstallModal";
 
 export default function ControlsWindow() {
   const [disableBtnLoading, setDisableBtnLoading] = useState(false);
   const [enableBtnLoading, setEnableBtnLoading] = useState(false);
   const [reloadBtnLoading, setReloadBtnLoading] = useState(false);
+  const [showModal, setShowModal] =  useState(false);
+  const handleModalClose = () => {
+      setShowModal(false);
+  }
+
   const [buttonSize, setButtonSize] = useState("lg");
   const [flexDirection, setFlexDirection] = useState("flex-row");
 
   const dispatch = useDispatch();
+  const runningStatusSocket = getRunningStatusSocket();
   const currentProject = useSelector((state) => state.project.currentProject);
+  const userId = useSelector((state) => state.auth.user.userid);
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,48 +43,16 @@ export default function ControlsWindow() {
   }, []);
 
   if (!currentProject) {
-    window.location.href = '/user/projects';
+    window.location.href = "/user/projects";
     return null;
   }
 
-  const { isDeployed: host, isRunning, projectId } = currentProject;
+  const { runningStatus, projectId } = currentProject;
+  const isRunning = runningStatus === "running";
 
-  const hostProject = () => {
-    dispatch(launchAutoCloseWaitingModal("We are setting things up for you.."));
-    fetch("/host/hostProject", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ projectId }),
-    })
-      .then((response) => {
-        dispatch(setWaitingCompleted());
-        if (!response.ok) {
-          response.json().then((data) => {
-            message(
-              `Error ${response.status}`,
-              data.message || "An error occurred in hosting your project.",
-              dispatch
-            );
-          });
-        } else {
-          response.json().then((data) => {
-             dispatch(setProjectHostedAndRunning({projectId: projectId, url: data.url}));
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        dispatch(setWaitingCompleted());
-        message("Error", "Unexpected error occurred", dispatch);
-      });
-  };
-
-  const disableHosting = () => {
+  const stopExecution = () => {
     setDisableBtnLoading(true);
-    fetch("/host/disableHosting", {
+    fetch("/project/stop", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -93,22 +63,30 @@ export default function ControlsWindow() {
       .then((response) => {
         setDisableBtnLoading(false);
         if (!response.ok) {
-          response.json().then((data) => {
-            message(
-              `Error ${response.status}`,
-              data.message || "An error occurred in disabling hosting your project.",
-              dispatch
-            );
-          }).catch((err)=>{
-            console.error(err);
-            message(
-              `Error ${response.status}`,
-              "An error occurred in disabling hosting your project.",
-              dispatch
-            );
-          });
+          response
+            .json()
+            .then((data) => {
+              message(
+                `Error ${response.status}`,
+                data.message || "An error occurred in completing your request",
+                dispatch
+              );
+            })
+            .catch((err) => {
+              console.error(err);
+              message(
+                `Error ${response.status}`,
+                "An error occurred in completing your request",
+                dispatch
+              );
+            });
         } else {
-          dispatch(setRunningDisable(projectId));
+          dispatch(setRunningStatus({ projectId, status: "not running" }));
+          runningStatusSocket.emit("update-status", {
+            projectId,
+            status: "not running",
+            userId,
+          });
         }
       })
       .catch((error) => {
@@ -118,9 +96,9 @@ export default function ControlsWindow() {
       });
   };
 
-  const enableHosting = () => {
+  const startExecution = () => {
     setEnableBtnLoading(true);
-    fetch("/host/enableHosting", {
+    fetch("/project/run", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -134,12 +112,17 @@ export default function ControlsWindow() {
           response.json().then((data) => {
             message(
               `Error ${response.status}`,
-              data.message || "An error occurred in enabling hosting your project.",
+              data.message || "An error occurred in completing your request",
               dispatch
             );
           });
         } else {
-          dispatch(setRunningEnable(projectId));
+          dispatch(setRunningStatus({ projectId, status: "running" }));
+          runningStatusSocket.emit("update-status", {
+            projectId,
+            status: "running",
+            userId,
+          });
         }
       })
       .catch((error) => {
@@ -151,7 +134,7 @@ export default function ControlsWindow() {
 
   const reload = () => {
     setReloadBtnLoading(true);
-    fetch("/host/reload", {
+    fetch("exec/run-nodejs/reload", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -162,68 +145,70 @@ export default function ControlsWindow() {
       .then((response) => {
         setReloadBtnLoading(false);
         if (!response.ok) {
-          response.json().then((data) => {
-            message(
-              `Error ${response.status}`,
-              data.message || "An error occurred in reloading your project.",
-              dispatch
-            );
-          }).catch(error =>{
-            message(
-              `Error ${response.status}`,
-              "An error occurred in reloading your project.",
-              dispatch
-            );
-            console.log(error)
-          });
+          response
+            .json()
+            .then((data) => {
+              message(
+                `Error ${response.status}`,
+                data.message || "An error occurred in reloading your project.",
+                dispatch
+              );
+            })
+            .catch((error) => {
+              message(
+                `Error ${response.status}`,
+                error.message || "An error occurred in reloading your project.",
+                dispatch
+              );
+            });
         }
       })
       .catch((error) => {
         setReloadBtnLoading(false);
         console.log(error);
-        message("Error", "Unexpected error occurred", dispatch);
+        message(
+          "Error",
+          error.message || "Unexpected error occurred",
+          dispatch
+        );
       });
   };
 
   return (
     <div className="controls-window">
-      {host ? (
-        <div className={`d-flex ${flexDirection}`}>
-          {isRunning ? (
-            disableBtnLoading ? (
-              <Button variant="primary" size={buttonSize} disabled>
-                Working on it...
-              </Button>
-            ) : (
-              <Button variant="danger" size={buttonSize} onClick={disableHosting}>
-                Temporarily Disable
-              </Button>
-            )
-          ) : enableBtnLoading ? (
-            <Button variant="primary" size={buttonSize} disabled>
-              Working on it...
-            </Button>
-          ) : (
-            <Button variant="primary" size={buttonSize} onClick={enableHosting}>
-              Re-Enable
-            </Button>
-          )}
-          {reloadBtnLoading ? (
-            <Button variant="primary" size={buttonSize} disabled>
-              <span className="mx-2">Reload</span>
-            </Button>
-          ) : (
-            <Button variant="primary" size={buttonSize} onClick={reload}>
-              <ion-icon name="reload-outline"></ion-icon>
-              <span className="mx-2">Reload</span>
-            </Button>
-          )}
-        </div>
-      ) : (
-        <Button variant="primary" size={buttonSize} onClick={hostProject}>
-          Deploy Your Project
+      <div className={`d-flex ${flexDirection}`}>
+        <Button onClick={()=> { setShowModal(true) }} size={buttonSize} >
+           npm Install
         </Button>
-      )}
+        {isRunning ? (
+          <ButtonWithLoading
+            buttonSize={buttonSize}
+            loading={disableBtnLoading}
+            onClick={stopExecution}
+          >
+            <ion-icon name="stop-outline" /> Stop Execution
+          </ButtonWithLoading>
+        ) : (
+          <ButtonWithLoading
+            buttonSize={buttonSize}
+            loading={enableBtnLoading}
+            onClick={startExecution}
+          >
+            <ion-icon name="play-outline" /> Run Nodejs
+          </ButtonWithLoading>
+        )}
+
+        <ButtonWithLoading
+          buttonSize={buttonSize}
+          loading={reloadBtnLoading}
+          onClick={reload}
+        >
+          <ion-icon name="reload-outline"></ion-icon>
+          <span className="mx-2">Reload</span>
+        </ButtonWithLoading>
+      </div>
+
+      <NpmInstallModal show={showModal} handleClose={handleModalClose}/>
     </div>
   );
 }

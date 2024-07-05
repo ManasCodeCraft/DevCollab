@@ -66,19 +66,6 @@ export default function FileStructure(props) {
             });
     }
 
-    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-        <span
-            ref={ref}
-            onClick={(e) => {
-                e.preventDefault();
-                onClick(e);
-            }}
-            style={{ cursor: 'pointer' }}
-        >
-            {children}
-        </span>
-    ));
-
     const fileName = props.file.fileName
     const fileExt = fileName.split('.')[fileName.split('.').length - 1]
 
@@ -93,7 +80,7 @@ export default function FileStructure(props) {
                                     <img src={`/icons/${fileExt}.png`} alt="" srcset="" onError={(e)=>{e.target.src='/icons/file.png'}} style={{width: '50px', height: '50px'}}/> {fileName}
                                 </span>
                                 <Dropdown>
-                                    <Dropdown.Toggle as={CustomToggle}>
+                                    <Dropdown.Toggle as='span'>
                                         <ion-icon name="ellipsis-vertical-outline"></ion-icon>
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>

@@ -1,25 +1,37 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useSelector } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import ActiveCollaborators from './activeCollaborators';
 
 export default function InfoWindow() {
+  const [show, setShow] = useState(false);
+  const hideModal = () => {
+    setShow(false);
+  };
+  const showModal = () => {
+    setShow(true);
+  }
+
   const project = useSelector(state=>state.project.currentProject);
+
   if(!project){
     return null;
   }
-
+  const activeCollab = project.activeCollaborators;
+  if(!activeCollab){
+     return null;
+  }
   return (
-      (project.isDeployed)? 
       <div className='info-window-wrapper'>
       <div className="info-window">
-              <span id='memory-usage'>
-                  <strong>Today Traffic: </strong><span>{project.todayReq}</span>
+              <span>
+                  <strong>Active Collaborators: </strong><span>{activeCollab.length}</span>
               </span>
-              <span id='cpu-usage'>
-                  <strong>This Month Traffic: </strong><span>{project.thisMonthReq}</span>
+              <span className='mx-auto'>
+                   <Button variant='info' onClick={showModal}>Check</Button>
               </span>
+              <ActiveCollaborators collaborators={activeCollab} show={show} hideModal={hideModal}/>
           </div>
       </div>
-  : 
-     null
   )
 }

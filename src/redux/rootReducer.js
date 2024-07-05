@@ -8,6 +8,13 @@ import waitReducer from './slices/waitingModalSlice'
 import configReducer from './slices/configSlice'
 import screenBlockLoadingReducer from './slices/screenBlockLoadingSlice'
 import chatReducer from './slices/chatSlice'
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; 
+
+const persistConfig = {
+     key: 'root',
+     storage,
+};   
 
 const rootReducer = combineReducers({
      auth: authReducer,
@@ -20,5 +27,9 @@ const rootReducer = combineReducers({
      loading: screenBlockLoadingReducer,
      chat: chatReducer,
 });
+
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// export default persistedReducer;
 
 export default rootReducer;

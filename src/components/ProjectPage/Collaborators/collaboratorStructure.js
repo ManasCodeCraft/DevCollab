@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Card, Row, Col, Dropdown, Image } from "react-bootstrap";
 import { confirmIt, message } from "../../../globalComponents/utilityModal";
+import { removeCollabById } from "../../../redux/slices/projectSlice";
 
 export default function CollaboratorStructure(props) {
   const projectId = useSelector(
@@ -52,6 +53,9 @@ export default function CollaboratorStructure(props) {
               dispatch
             );
           });
+        }
+        else{
+          dispatch(removeCollabById({projectId, id}))
         }
       })
       .catch((err) => {

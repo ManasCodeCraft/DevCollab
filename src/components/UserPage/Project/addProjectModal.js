@@ -15,6 +15,7 @@ export default function AddProjectModal({ show, handleClose }) {
 
   function addProjectSubmit(e) {
     e.preventDefault();
+    dispatch(launchAutoCloseWaitingModal("Please wait... we are setting up your project"))
     const projectName = e.target.elements.projectName.value;
     fetch('/project/create', {
       method: 'POST',
@@ -25,6 +26,7 @@ export default function AddProjectModal({ show, handleClose }) {
       body: JSON.stringify({ projectName }),
     })
       .then((response) => {
+        dispatch(setWaitingCompleted());
         if (!response.ok) {
           throw new Error('Failed to create project');
         }
@@ -59,7 +61,7 @@ export default function AddProjectModal({ show, handleClose }) {
 
     // creating project 
     const projectName = files[0].webkitRelativePath.split('/')[0];
-    const response = await fetch('/project/create', {
+    const response = await fetch('/project/create-empty', {
       method: 'POST',
       credentials: 'include',
       headers: {

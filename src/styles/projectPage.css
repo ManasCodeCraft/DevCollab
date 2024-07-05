@@ -60,3 +60,14 @@
  .project-structure-container{
     min-height: 95vh !important;
  }
+
+ .editor-tools{
+    display: flex;
+    padding: 1px 5px;
+    align-items: center;
+    justify-content: space-between;
+ }
+
+ .editor-tools #filename{
+    color: rgb(255, 190, 69);
+ }

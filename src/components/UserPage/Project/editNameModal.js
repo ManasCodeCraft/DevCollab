@@ -35,7 +35,7 @@ export default function EditNameModal({project, show, handleClose}) {
       })
       .then((data) => {
         dispatch(setProjectNewName({id: project.projectId, newName: data}))     
-        socketOp({type: 'rename', target: 'project', data: {id: project.projectId, newName: data}, projectData: project})
+        socketOp({type: 'rename', target: 'project', data: {id: project.projectId, newName: data}})
         handleClose();
       })
       .catch((err) => {

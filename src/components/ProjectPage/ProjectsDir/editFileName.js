@@ -37,7 +37,7 @@ export default function EditFileNameModal({ file, show, handleClose }) {
 
       const data = await response.json();
       dispatch(setFileNewName({ id: file.fileId, newName: data })); 
-      socketOp({type:'rename', target: 'file', data: data});
+      socketOp({type:'rename', target: 'file', data: { id: file.fileId, newName: data }});
       handleClose();
     } catch (err) {
       message('500', err.message || 'Unexpected error:', dispatch);

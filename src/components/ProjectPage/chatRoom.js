@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { pushMessage } from '../../redux/slices/chatSlice';
 
 export default function ChatRoom({sendMessage}) {
-  const chatdata = useSelector(state=>state.chat);
+  const currentProject = useSelector(state=>state.project.currentProject);
+  const projectId = currentProject.projectId;
+  const chats = useSelector(state=>state.chat);
+  const chatsFiltered = chats.filter(chat => chat.projectId == projectId);
+  const chatdata = chatsFiltered.map((chat) => chat.message)
   const dispatch = useDispatch();
   const chatContainerRef = useRef(null);
   const inputRef = useRef(null);
@@ -13,8 +17,8 @@ export default function ChatRoom({sendMessage}) {
       e.preventDefault()
       const msg = inputRef.current.value;
       if(msg.length > 0){
-          const data = sendMessage(msg)
-          dispatch(pushMessage(data));
+          const data = sendMessage({projectId, message: msg});
+          dispatch(pushMessage({projectId, message: data}));
           inputRef.current.value = '';
       }
   }

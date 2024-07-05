@@ -51,18 +51,6 @@ export default function FolderStructure(props){
       });
   }
 
-    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-        <span
-          ref={ref}
-          onClick={(e) => {
-            e.preventDefault();
-            onClick(e);
-          }}
-          style={{ cursor: 'pointer' }}
-        >
-          {children}
-        </span>
-      ));
     return (
       <>
         <div className="row my-2 dir-structure">
@@ -74,7 +62,7 @@ export default function FolderStructure(props){
                               <img src="/icons/folder.png" alt="" srcset="" style={{width: '50px', height: '50px'}}/> {props.dir.dirName}
                               </span>
                             <Dropdown>
-                                 <Dropdown.Toggle as={CustomToggle}>
+                                 <Dropdown.Toggle as='span'>
                                          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
                                  </Dropdown.Toggle>
                                  <Dropdown.Menu>

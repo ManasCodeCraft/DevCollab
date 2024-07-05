@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   projects: [],
@@ -10,198 +10,185 @@ const initialState = {
   error: null,
 };
 
-const projectSlice = createSlice({ 
-  name: 'project',
+const projectSlice = createSlice({
+  name: "project",
   initialState,
   reducers: {
-    setProjects(state, action){
+    setProjects(state, action) {
       state.projects = [...action.payload];
       state.loading = false;
       state.error = null;
     },
-    setProjectHostedAndRunning(state, action){
+    setRunningStatus(state, action) {
       let id = action.payload.projectId;
-      state.currentProject.url = action.payload.url;
-      state.currentProject.isDeployed = true;
-      state.currentProject.isRunning = true;
-      state.currentProject.todayReq = 0;
-      state.currentProject.thisMonthReq = 0;
-
-      for(let project of state.projects){
-         if(project.projectId === id){
-             project = state.currentProject;
-             break;
-         }
-      }
-    },
-    setRunningDisable(state, action){
-      let id = action.payload;
-      for(let project of state.projects){
-        if(project.projectId === id){
-          project.isRunning = false;
+      let status = action.payload.status;
+      for (let project of state.projects) {
+        if (project.projectId === id) {
+          project.runningStatus = status;
           break;
         }
       }
 
-      state.currentProject.isRunning = false;
+      if(state.currentProject.projectId == id){
+          state.currentProject.runningStatus = status;
+      }
 
-      for(let dir of state.dirStack){
-        if(dir.projectId){
-            dir.isRunning = false;
-            break;
-        }
-     }
     },
-    setRunningEnable(state, action){
-      let id = action.payload;
-      for(let project of state.projects){
-        if(project.projectId === id){
-          project.isRunning = true;
+    setProjectLogs(state, action) {
+      let id = action.payload.id;
+      let logs = action.payload.logs;
+      for (let project of state.projects) {
+        if (project.projectId === id) {
+          project.logs = logs;
           state.currentProject = project;
           break;
         }
       }
 
-      for(let dir of state.dirStack){
-        if(dir.projectId){
-            dir = state.currentProject;
-            break;
+      for (let dir of state.dirStack) {
+        if (dir.projectId) {
+          dir = state.currentProject;
+          break;
         }
-     }
-    },
-    setProjectLogs(state, action){
-       let id = action.payload.id;
-       let logs = action.payload.logs;
-       for(let project of state.projects){
-         if(project.projectId === id){
-           project.logs = logs;
-           state.currentProject = project;
-           break
-         }
-       }
-
-       for(let dir of state.dirStack){
-        if(dir.projectId){
-            dir = state.currentProject;
-            break;
-        }
-     }
-
-    },
-    setActivityLogs(state, action){
-       let id = action.payload.id;
-       let logs = action.payload.logs;
-       for(let project of state.projects){
-         if(project.projectId == id){
-           project.activityLogs = logs;
-           state.currentProject.activityLogs = logs;
-           break
-         }
-       }
-    },
-
-    addActivityLog(state, action){
-        const id = action.payload.project;
-        if(state.currentProject.projectId == id){
-              console.log(action.payload)
-              state.currentProject.activityLogs.push(action.payload)
-        }
-    },
-
-    setProjectNewName(state, action){
-       let id = action.payload.id 
-       let newName = action.payload.newName;
-       for (let project of state.projects){
-         if (project.projectId === id){
-           project.projectName = newName;
-         }
-       }
-    },
-    setDirectoryNewName(state, action){
-       let id = action.payload.id 
-       let newName = action.payload.newName;
-       let dirs = state.currentWorkingDirectory.directories
-       for(let dir of dirs){
-          if (dir.dirId === id){
-            dir.dirName = newName;
-            break;
-          }
-       }
-
-       state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory
-
-    },
-    setFileNewName(state, action){
-       let id = action.payload.id 
-       let newName = action.payload.newName;
-       let files = state.currentWorkingDirectory.files
-       for(let file of files){
-          if (file.fileId === id){
-            file.fileName = newName;
-            break;
-          }
-       }
-
-       state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory
-
-    },
-
-    setFileContent(state, action){
-       var id = action.payload.id;
-       var content = action.payload.content;
-       var file = state.currentlyOpenedFile;
-       file.content = content;
-    },
-    
-    createNewProject(state, action){
-       state.projects.push(action.payload);
-    },
-    replaceExistingProject(state, action){
-       let id = action.payload.id;
-       for (let project of state.projects){
-         if (project.projectId === id){
-           project = action.payload.newProject;
-         }
-       }
-    },
-    addFile(state, action){
-       state.currentWorkingDirectory.files.push(action.payload);
-       state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory;
-
-       if(!state.currentWorkingDirectory.id){
-           state.currentProject.files.push(action.payload)
-       }
-    },
-    addFolder(state, action){
-       state.currentWorkingDirectory.directories.push(action.payload);
-       state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory;
-       if(!state.currentWorkingDirectory.id){
-           state.currentProject.directories.push(action.payload)
       }
     },
-    setCurrentProject(state,action){
+    setActivityLogs(state, action) {
+      let id = action.payload.id;
+      let logs = action.payload.logs;
+      for (let project of state.projects) {
+        if (project.projectId == id) {
+          project.activityLogs = logs;
+          state.currentProject.activityLogs = logs;
+          break;
+        }
+      }
+    },
+
+    addActivityLog(state, action) {
+      if (!state.currentProject) {
+        return;
+      }
+      const id = action.payload.project;
+      if (state.currentProject.projectId == id) {
+        state.currentProject.activityLogs.push(action.payload);
+      }
+    },
+
+    pushConsoleLog(state, action) {
+      const projectId = action.payload.projectId;
+      const log = action.payload.log;
+      for (let project of state.projects) {
+        if (project.projectId == projectId) {
+          project.consoleLogs = [log, ...project.consoleLogs];
+        }
+      }
+
+      if (state.currentProject && state.currentProject.projectId == projectId) {
+        state.currentProject.consoleLogs = [
+          log,
+          ...state.currentProject.consoleLogs,
+        ];
+      }
+    },
+
+    setProjectNewName(state, action) {
+      let id = action.payload.id;
+      let newName = action.payload.newName;
+      for (let project of state.projects) {
+        if (project.projectId === id) {
+          project.projectName = newName;
+        }
+      }
+    },
+    setDirectoryNewName(state, action) {
+      let id = action.payload.id;
+      let newName = action.payload.newName;
+      let dirs = state.currentWorkingDirectory.directories;
+      for (let dir of dirs) {
+        if (dir.dirId === id) {
+          dir.dirName = newName;
+          break;
+        }
+      }
+
+      state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory;
+    },
+    setFileNewName(state, action) {
+      let id = action.payload.id;
+      let newName = action.payload.newName;
+      let files = state.currentWorkingDirectory.files;
+      for (let file of files) {
+        if (file.fileId === id) {
+          file.fileName = newName;
+          break;
+        }
+      }
+
+      state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory;
+    },
+
+    setFileContent(state, action) {
+      var id = action.payload.id;
+      var content = action.payload.content;
+      var currentWorkingDirectory = state.currentWorkingDirectory;
+      for (let file of currentWorkingDirectory.files) {
+        console.log(currentWorkingDirectory);
+        if (file.fileId == id) {
+          file.fileContent = content;
+          break;
+        }
+      }
+      state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory;
+      if (state.currentlyOpenedFile.fileId == id) {
+        state.currentlyOpenedFile.fileContent = content;
+      }
+    },
+
+    createNewProject(state, action) {
+      state.projects.push(action.payload);
+    },
+    replaceExistingProject(state, action) {
+      let id = action.payload.id;
+      for (let project of state.projects) {
+        if (project.projectId === id) {
+          project = action.payload.newProject;
+        }
+      }
+    },
+    removeCurrentProject(state) {
+      state.currentProject = null;
+    },
+    addFile(state, action) {
+      state.currentWorkingDirectory.files.push(action.payload);
+      state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory;
+    },
+    addFolder(state, action) {
+      state.currentWorkingDirectory.directories.push(action.payload);
+      state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory;
+    },
+    setCurrentProject(state, action) {
       state.currentProject = action.payload;
     },
-    setCurrentWorkingDirectory(state,action){
+    setCurrentWorkingDirectory(state, action) {
       state.currentWorkingDirectory = action.payload;
     },
-    pushDirStack(state,action){
+    pushDirStack(state, action) {
       state.dirStack.push(action.payload);
       state.currentWorkingDirectory = action.payload;
     },
-    popDirStack(state){
+    popDirStack(state) {
       state.dirStack.pop();
       state.currentWorkingDirectory = state.dirStack[state.dirStack.length - 1];
     },
-    popUptoIndexDirStack(state,action){
-      state.dirStack = state.dirStack.slice(0,action.payload+1);
+    popUptoIndexDirStack(state, action) {
+      state.dirStack = state.dirStack.slice(0, action.payload + 1);
       state.currentWorkingDirectory = state.dirStack[state.dirStack.length - 1];
     },
-    popAllDirStack(state){
+    popAllDirStack(state) {
       state.dirStack = [];
-      state.currentWorkingDirectory= null;
+      state.currentWorkingDirectory = null;
     },
-    setCurrentlyOpenedFile(state,action){
+    setCurrentlyOpenedFile(state, action) {
       state.currentlyOpenedFile = action.payload;
     },
     setLoading(state, action) {
@@ -212,39 +199,121 @@ const projectSlice = createSlice({
       state.loading = false;
     },
     deleteProjectById(state, action) {
-      let id = action.payload; 
-      for(let project of state.projects){
-         if(project.projectId === id){
-            state.projects =  state.projects.filter(project => project.projectId !== id)
-            break;
-         }
+      let id = action.payload;
+      for (let project of state.projects) {
+        if (project.projectId === id) {
+          state.projects = state.projects.filter(
+            (project) => project.projectId !== id
+          );
+          break;
+        }
       }
       state.loading = false;
       state.error = null;
     },
-    deleteDirectoryById(state, action){
+    deleteDirectoryById(state, action) {
       let id = action.payload;
-      state.currentWorkingDirectory.directories =  state.currentWorkingDirectory.directories.filter(dir => dir.dirId !== id)
-      state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory
+      state.currentWorkingDirectory.directories =
+        state.currentWorkingDirectory.directories.filter(
+          (dir) => dir.dirId !== id
+        );
+      state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory;
 
-      if(!state.currentWorkingDirectory.id){
-          state.currentProject = state.currentWorkingDirectory
+      if (!state.currentWorkingDirectory.id) {
+        state.currentProject = state.currentWorkingDirectory;
       }
-
-
     },
-    deleteFileById(state, action){
+    deleteFileById(state, action) {
       let id = action.payload;
-      state.currentWorkingDirectory.files =  state.currentWorkingDirectory.files.filter(file => file.fileId !== id)
-      state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory
+      state.currentWorkingDirectory.files =
+        state.currentWorkingDirectory.files.filter(
+          (file) => file.fileId !== id
+        );
+      state.dirStack[state.dirStack.length - 1] = state.currentWorkingDirectory;
 
-      if(!state.currentWorkingDirectory.id){
-          state.currentProject = state.currentWorkingDirectory
+      if (!state.currentWorkingDirectory.id) {
+        state.currentProject = state.currentWorkingDirectory;
       }
- 
+    },
+
+    addNewCollab(state, action) {
+      let id = action.payload.projectId;
+      for (let project of state.projects) {
+        if (project.projectId === id) {
+          project.collaborators.push(action.payload.data);
+          break;
+        }
+      }
+      if (state.currentProject && state.currentProject.projectId === id) {
+        state.currentProject.collaborators.push(action.payload.data);
+      }
+    },
+
+    removeCollabById(state, action) {
+      let projectId = action.payload.projectId;
+      let collabId = action.payload.id;
+      for (let project of state.projects) {
+        if (project.projectId === projectId) {
+          project.collaborators = project.collaborators.filter(
+            (collab) => collab.id !== collabId
+          );
+          break;
+        }
+      }
+      if (
+        state.currentProject &&
+        state.currentProject.projectId === projectId
+      ) {
+        state.currentProject.collaborators =
+          state.currentProject.collaborators.filter(
+            (collab) => collab.id !== collabId
+          );
+      }
+    },
+
+    updateActiveCollab(state, action) {
+      if(!state.currentProject){
+        return;
+      }
+      if (state.currentProject.projectId == action.payload.projectId) {
+        state.currentProject.activeCollaborators = action.payload.data;
+      }
     },
   },
 });
 
-export const { setActivityLogs, addActivityLog ,setFileContent, setProjectLogs, setRunningEnable, setRunningDisable, setProjectHostedAndRunning, setFileNewName ,deleteFileById ,deleteDirectoryById ,setDirectoryNewName ,addFolder, addFile, replaceExistingProject ,createNewProject ,setProjectNewName, setCurrentlyOpenedFile ,setCurrentWorkingDirectory, setCurrentProject, setProjects, pushDirStack, popDirStack, popAllDirStack, popUptoIndexDirStack, setLoading, setError, deleteProjectById } = projectSlice.actions;
+export const {
+  incActiveCollab,
+  decActiveCollab,
+  pushConsoleLog,
+  updateActiveCollab,
+  setRunningStatus,
+  addNewCollab,
+  removeCollabById,
+  removeCurrentProject,
+  setActivityLogs,
+  addActivityLog,
+  setFileContent,
+  setProjectLogs,
+  setFileNewName,
+  deleteFileById,
+  deleteDirectoryById,
+  setDirectoryNewName,
+  addFolder,
+  addFile,
+  replaceExistingProject,
+  createNewProject,
+  setProjectNewName,
+  setCurrentlyOpenedFile,
+  setCurrentWorkingDirectory,
+  setCurrentProject,
+  setProjects,
+  pushDirStack,
+  popDirStack,
+  popAllDirStack,
+  popUptoIndexDirStack,
+  setLoading,
+  setError,
+  deleteProjectById,
+} = projectSlice.actions;
 export default projectSlice.reducer;

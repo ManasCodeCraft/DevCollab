@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { pushMessage } from "../../redux/slices/chatSlice";
+import { useSelector } from "react-redux";
 
 function getCurrentTime() {
   const date = new Date();
@@ -14,42 +12,23 @@ function getCurrentTime() {
 }
 
 export default function useChat(socket) {
-  const project = useSelector((state) => state.project.currentProject);
-  if (!project) {
-    window.location.href = "/user/projects";
-  }
 
-  const userId = useSelector((state) => state.auth.user.userid);
-  const username = useSelector((state) => state.auth.user.username);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (socket) {
-      socket.on("message", (data) => {
-        dispatch(pushMessage(data));
-      });
-    }
-  }, [socket]);
-
-  if (!socket) {
-    return null;
-  }
-
-  const projectId = project.projectId;
-  const collaborators = project.collaborators.map((coll) => coll.id);
-  socket.emit("register", { projectId, collaborators, userId });
+  const user = useSelector((state) => state.auth.user);
 
   var id = 0;
 
-  function send(message) {
+  function send(detail) {
     const data = {
-      name: username,
+      name: user.username,
       time: getCurrentTime(),
-      text: message,
+      text: detail.message,
       self: false,
       id: id++,
     };
-    socket.emit("message", { message: data, userId, projectId });
+    detail.message = data;
+    detail.userId = user.userid;
+
+    socket.emit("send-message", detail);
     data.self = true;
     return data;
   }

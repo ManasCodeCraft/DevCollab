@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import { removeInvitation } from '../../../redux/slices/invitationSlice';
 import { useDispatch } from 'react-redux';
+import { createNewProject } from '../../../redux/slices/projectSlice';
+import { formatDateForInvite } from '../../../utils/formatTime';
 
 export default function InvitationBody(props) {
     const [isDisabled, setIsDisabled] = useState(false);
@@ -27,6 +29,7 @@ export default function InvitationBody(props) {
             setAcceptText('Accepted')
             setTimeout(() => setIsRemoved(true), 2000);
             dispatch(removeInvitation(props.invitation._id))
+            dispatch(createNewProject(data))
         }).catch((error) => {
             console.log(error);
         });
@@ -65,7 +68,7 @@ export default function InvitationBody(props) {
                     <Card.Body>
                         <Card.Title>{props.invitation.project.name}</Card.Title>
                         <Card.Text>
-                            {props.invitation.sender.UserName} has invited you on 4 April 2024
+                            {props.invitation.sender.UserName} has invited you on { formatDateForInvite(props.invitation.created_at) }
                         </Card.Text>
                     </Card.Body>
                     <Card.Footer className="text-muted">

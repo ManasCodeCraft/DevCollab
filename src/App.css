@@ -74,6 +74,10 @@ button:active{
    transform: scale(0.9);
 }
 
+.dropdown-toggle::after{
+   display: none !important;
+}
+
 ion-icon{
   font-size: 15px;
 }

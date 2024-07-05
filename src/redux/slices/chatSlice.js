@@ -6,9 +6,12 @@ const chatSlice = createSlice({
     reducers: {
         pushMessage: (state, action)=> {
             state.push(action.payload);
+        },
+        clearMessages: (state) => {
+            return [];
         }
     }
 });
 
-export const { pushMessage } = chatSlice.actions;
+export const { clearMessages, pushMessage } = chatSlice.actions;
 export default chatSlice.reducer;

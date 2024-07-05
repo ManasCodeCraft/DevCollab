@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
 import { setActivityLogs } from "../slices/projectSlice";
 
 export default async function fetchActivityLogs(projectId ,dispatch){

@@ -5,6 +5,7 @@ export default function useDirSocket(){
     const socket = getDirSocket();
     const userId = useSelector(state=>state.auth.user.userid);
     const project = useSelector(state=>state.project.currentProject);
+    const currentDir = useSelector(state=>state.project.currentWorkingDirectory);
 
     function operate(details){
         const type = details.type;
@@ -19,6 +20,7 @@ export default function useDirSocket(){
             collaborators = project.collaborators.map(coll=>coll.id);
         }
         const detail = {
+            directory: currentDir.id,
             userId,
             collaborators,
             type,

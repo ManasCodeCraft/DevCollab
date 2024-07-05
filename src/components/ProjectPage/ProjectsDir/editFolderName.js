@@ -37,7 +37,7 @@ export default function EditDirectoryNameModal({ directory, show, handleClose })
 
       const data = await response.json();
       dispatch(setDirectoryNewName({ id: directory.dirId, newName: data }));
-      socketOp({type:'rename', target: 'folder', data: data});
+      socketOp({type:'rename', target: 'folder', data: { id: directory.dirId, newName: data }});
     
       handleClose();
     } catch (err) {

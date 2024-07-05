@@ -15,8 +15,6 @@ export default function ActivityLogs() {
     return null;
   }
 
-  console.log(activityLogs)
-  
   return (
     <Container className='activity-log-container'>
       { 

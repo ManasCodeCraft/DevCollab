@@ -19,16 +19,13 @@ export default function InfoAndControls() {
     </div>
 
     {
-      (project.isRunning)? 
       <Alert variant="info" dismissible>
       <div className="d-flex align-items-center">
           <span>
-              Your website is live at <a href={project.url} target='_blank'>{project.url}</a>
+              Your project url is <a href={project.url} target='_blank'>{project.url}</a>
           </span>
       </div>
       </Alert> 
-      :
-      null
     }
 
     </>
