@@ -20,11 +20,15 @@ export default function HomePage() {
        <Navbar/>
        <Header/>
        <div className="feature-wrapper">
-          <Feature left={true} featureImg={'feature1.png'} text={<><span>Deploy</span> with one click</>} />
+          <Feature left={true} featureImg={'feature1.png'} text={<><span>Collaborate</span> with your team</>} />
            <CenteredLine/>
-          <Feature left={false} featureImg={'feature2.png'} text={<>Work with your <span>team</span></>} />
+          <Feature left={false} featureImg={'feature2.png'} text={<>Manage and organize <span>projects</span> effortlessly </>} />
            <CenteredLine/>
-          <Feature left={true} featureImg={'feature3.png'} text={<>Easy to <span>SetUp</span> and Organize</>} />
+          <Feature left={true} featureImg={'feature3.png'} text={<>Every collaborator's action reflects in <span>real time</span></>} />
+           <CenteredLine/>
+          <Feature left={true} featureImg={'feature4.png'} text={<>Share Your Ideas in Dedicated Project <span>Chatrooms</span> </>} />
+           <CenteredLine/>
+          <Feature left={true} featureImg={'feature5.png'} text={<>Run Your <span>NodeJs Express </span> Projects from Anywhere</>} />
            <CenteredLine/>
        </div>
        <TriggerLogin/>

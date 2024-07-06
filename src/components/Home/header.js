@@ -22,7 +22,7 @@ export default function Header() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="display-4 fw-bold bannertext"
           >
-            Collaborate, Manage and Deploy your <span>NodeJs Projects</span>
+            Collaborate, Manage and Build your <span>NodeJs Express</span> Projects
           </motion.h1>
           <motion.div
             initial={{ opacity: 0 }}
@@ -41,8 +41,18 @@ export default function Header() {
                 </p>
               </Carousel.Item>
               <Carousel.Item>
+                <p className="banner-subline text-secondary fs-3 fw-bold">
+                  Every Collaborator's Action Reflects in Real Time
+                </p>
+              </Carousel.Item>
+              <Carousel.Item>
                 <p className="banner-subline text-secondary fs-3 fw-bold text-center">
-                  Deploy your NodeJs projects with ease
+                  Share Your Ideas in Dedicated Project Chatrooms
+                </p>
+              </Carousel.Item>
+              <Carousel.Item>
+                <p className="banner-subline text-secondary fs-3 fw-bold text-center">
+                  Run Your NodeJs Express Projects from Anywhere
                 </p>
               </Carousel.Item>
             </Carousel>
