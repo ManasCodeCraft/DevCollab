@@ -137,25 +137,22 @@ export default function AddFileFolderModal({
       }
     }
 
-    var filesUploaded = 0;
     var totalFiles = filtered_files.length;
-    const incProgress = () => {
-      filesUploaded++;
-      let progress = (filesUploaded / totalFiles) * 100;
-      dispatch(setWaitingModalProgress(progress));
-      dispatch(
-        setModalWaitingText(`Uploading ${filesUploaded + 1} of ${totalFiles}`)
-      );
-    };
+    var filesUploading = [];
+    const incProgress = ()=>{
+       let progress = (filesUploading.length/totalFiles)*100;
+       let currentFile = filesUploading[filesUploading.length-1];
+       dispatch(setWaitingModalProgress(progress))
+       dispatch(setModalWaitingText(`Uploading ${filesUploading.length} of ${totalFiles} (${currentFile.name})`))
+    }
 
     dispatch(setWaitingModalProgress(0));
-    dispatch(
-      setModalWaitingText(`Uploading ${filesUploaded + 1} of ${totalFiles}`)
-    );
 
     // uploading files
 
     for (let file of filtered_files) {
+      filesUploading.push(file);
+      incProgress();
       const fileData = new FormData();
       fileData.append("file", file);
       fileData.append("relativePath", file.relativePath);
@@ -178,7 +175,6 @@ export default function AddFileFolderModal({
         break;
       }
 
-      incProgress();
     }
 
     await refreshDirectory(dispatch, parentDirectoryId)

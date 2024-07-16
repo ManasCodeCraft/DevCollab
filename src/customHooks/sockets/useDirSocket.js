@@ -27,7 +27,7 @@ export default function useDirSocket(){
             target,
             data
         }
-        socket.emit('operation', detail)
+        socket.emit('send-operation', detail)
     }
 
     return operate;

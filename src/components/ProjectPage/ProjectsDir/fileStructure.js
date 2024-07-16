@@ -19,7 +19,6 @@ export default function FileStructure(props) {
     };
 
     function openFile() {
-        console.log(props.file);
         if (props.file.fileType === 'String') {
             dispatch(setCurrentlyOpenedFile(props.file));
             navigate('/project/structure/editor');

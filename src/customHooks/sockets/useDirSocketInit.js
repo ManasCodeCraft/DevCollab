@@ -21,6 +21,7 @@ export default function useSocketInit(socket) {
   const currentProject = useSelector((state) => state.project.currentProject);
 
   const handleDirOperations = ({ directory, data, type, target }) => {
+    console.log('got here', directory, data, type, target);
     if (!currDirectory) {
       return;
     }
