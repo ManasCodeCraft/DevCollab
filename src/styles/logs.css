@@ -1,4 +1,4 @@
-.console-logs-window, .error-logs-window{
+.console-logs-window, .program-logs-window{
     height: 80vh;
     background-color: var(--bg-color);
     display: flex;
@@ -8,6 +8,6 @@
     overflow-y: scroll;
 }
 
-.console-logs-wrapper, .error-logs-wrapper{
+.console-logs-wrapper, .program-logs-wrapper{
     padding: 2rem;
 }

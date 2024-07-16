@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setRunningStatus } from "../../redux/slices/projectSlice";
+import { setRunningStatus, updateProgramStatus } from "../../redux/slices/projectSlice";
 import { useEffect } from "react";
 
 export default function useRunningStatusInit(socket) {
@@ -14,10 +14,16 @@ export default function useRunningStatusInit(socket) {
         dispatch(setRunningStatus(data));
     }
 
+    const handleProgramRunningStatus = (data) => {
+       dispatch(updateProgramStatus(data));
+    }
+
     socket.on('status-update', handleRunningStatusChange);
+    socket.on('program-status-update', handleProgramRunningStatus);
 
     return () => {
         socket.off('status-update', handleRunningStatusChange);
+        socket.off('program-status-update', handleProgramRunningStatus);
     };
   }, [socket]);
 }

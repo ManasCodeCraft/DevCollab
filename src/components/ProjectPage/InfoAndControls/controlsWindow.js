@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { message } from "../../../globalComponents/utilityModal";
 import { setRunningStatus } from "../../../redux/slices/projectSlice";
 import { getRunningStatusSocket } from "../../../websocketInit";
-import ButtonWithLoading from "./buttonWithLoading";
+import ButtonWithLoading from "../../../globalComponents/buttonWithLoading";
 import NpmInstallModal from "./npmInstallModal";
 
 export default function ControlsWindow() {

@@ -6,6 +6,10 @@ const initialState = {
   currentProject: null,
   dirStack: [],
   currentlyOpenedFile: null,
+  currentlyExecutingFile: {
+    logs: [],
+    status: 'not running',
+  },
   loading: false,
   error: null,
 };
@@ -132,7 +136,6 @@ const projectSlice = createSlice({
       var content = action.payload.content;
       var currentWorkingDirectory = state.currentWorkingDirectory;
       for (let file of currentWorkingDirectory.files) {
-        console.log(currentWorkingDirectory);
         if (file.fileId == id) {
           file.fileContent = content;
           break;
@@ -279,10 +282,47 @@ const projectSlice = createSlice({
         state.currentProject.activeCollaborators = action.payload.data;
       }
     },
+
+    setCurrentlyExecutingFile(state, action){
+      let logs = state.currentlyExecutingFile.logs;
+
+      if(!action.payload){
+         state.currentlyExecutingFile = { logs, ...state.currentlyOpenedFile}
+         return;
+      }
+      state.currentlyExecutingFile = { logs, ...action.payload};
+    },
+
+    addLogToCurrentlyExecutingFile(state, action){
+      const newLogs = [action.payload.log, ...state.currentlyExecutingFile.logs];
+      newLogs.sort((a, b)=> b.key - a.key);
+      state.currentlyExecutingFile.logs = newLogs
+    },
+
+    setLogToCurrentlyExecutingFile(state, action){
+      state.currentlyExecutingFile.logs = action.payload;
+    },
+
+    removeLogFromCurrentlyExecutingFile(state){
+      state.currentlyExecutingFile.logs = [];
+    },
+
+    updateProgramStatus(state, action){
+      if(typeof action.payload === 'object' && Object.keys(action.payload).includes('status')){
+         state.currentlyExecutingFile.status = action.payload['status'];
+         return;
+      }
+      state.currentlyExecutingFile.status = action.payload;
+    }
   },
 });
 
 export const {
+  updateProgramStatus,
+  setCurrentlyExecutingFile,
+  addLogToCurrentlyExecutingFile,
+  setLogToCurrentlyExecutingFile,
+  removeLogFromCurrentlyExecutingFile,
   incActiveCollab,
   decActiveCollab,
   pushConsoleLog,
