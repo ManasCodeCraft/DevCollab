@@ -28,6 +28,7 @@ export default function useChat(socket) {
     detail.message = data;
     detail.userId = user.userid;
 
+    console.log('sending', detail);
     socket.emit("send-message", detail);
     data.self = true;
     return data;
